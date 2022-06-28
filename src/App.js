@@ -1,61 +1,47 @@
 import './App.css';
-import Navbar from './Navbar';
-import Home from  './Home'
-import NewPost from  './NewPost'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router,Route,Routes, Navigate} from 'react-router-dom';
+import HomePage from './components/pages/HomePage';
+import RegisterPage from './components/pages/RegisterPage';
+import Dashboard from './components/pages/Dashboard';
+import NotFound from './components/pages/NotFound';
+import Amount from './components/pages/Amount';
+import User from './components/pages/User';
+import {useState,useEffect} from 'react'
+const App=()=>{
+  const [isAuthenticated,setIsAuthenticated]=useState(false);
+  const setAuth=(boolean)=>{
+    setIsAuthenticated(boolean)
+  }
 
-import Footer from  './Footer'
-import ErrorPage from './ErrorPage'
-import About from './About';
-import PostPage from './PostPage';
-
-
-import {useState, UseEffect} from 'react';
-
-
-function App() {
-
-    const [posts, setPosts] = useState([
-      {
-        id:1,
-        title:"React Js Tutorial",
-        date:"June 02, 2022 11:17:52 AM",
-        "body":"React, Django framework, Python"
-      },
-      {
-        id:2,
-        title:"The Presidency Title Race",
-        date:"June 02, 2022 11:17:52 AM",
-        "body":"Presidential Politics is "
-      }
-    ])
-
-
+  const checkAuthenticated=async()=>{
+    try {
+      const url='http://localhost:5000/api/verify'
+      const response=await fetch(url,{
+        method:'GET',
+        headers:{
+          authorization:`Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      const parseRes= await response.json();
+      parseRes===true ? setIsAuthenticated(true): setIsAuthenticated(false)
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
+  useEffect(()=>{
+    checkAuthenticated();
+  },[]);
   return (
-  <Router>
-     <Navbar/>
-    
-      <Routes>
-       <Route path='/' 
-          element={<Home
-          posts={posts}         
-          />}/>
-       <Route path='/about' element={<About/>}/>
-
-       <Route path='/new' element={<NewPost/>}/>
-
-       <Route path='/post:id' element={<PostPage 
-          posts={posts}/>}
-          />
-       <Route path='/footer' element={<Footer/>}/>
-       
-       <Route path='*' element={<ErrorPage/>}/>
-       
-     
-      </Routes> 
-      </Router>
-   
-  
+    <Router>
+    <Routes>
+      <Route path='/' element={!isAuthenticated ? <RegisterPage setAuth={setAuth}/> :<Navigate to='/home'/>}/>
+      <Route path='/home' element={isAuthenticated ? <HomePage setAuth={setAuth}/>:<Navigate to='/'/>}/>
+      <Route path='/dashboard' element={isAuthenticated ? <Dashboard setAuth={setAuth}/>:<Navigate to='/'/>}/>
+      <Route path='/user' element={isAuthenticated ? <User setAuth={setAuth}/>:<Navigate to='/'/>}/>
+      <Route path='/amount' element={isAuthenticated ? <Amount setAuth={setAuth}/>:<Navigate to='/'/>}/>
+      <Route path='*' element={<NotFound/>}/>
+    </Routes>
+  </Router>
   );
 }
  
