@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { toast } from 'react-toastify';
 const RegisterPage=({setAuth})=>{
       const toReg=()=>{
         const register=document.querySelector('.register');
@@ -16,6 +16,7 @@ const RegisterPage=({setAuth})=>{
       };
       
       //form inputs
+      const [pic,setPic]=useState('');
       const [username,setName]=useState('');
       const [email,setEmail]=useState('');
       const [password, setPassword]=useState('');
@@ -29,6 +30,7 @@ const RegisterPage=({setAuth})=>{
             method:'post',
             body:JSON.stringify({
             username:username,
+            pic:pic,
             email:email,
             password:password 
           }),
@@ -38,12 +40,16 @@ const RegisterPage=({setAuth})=>{
         })
         const parseRes=await response.json()
         if(parseRes.token){
+          localStorage.setItem('pic');
           localStorage.setItem('token',parseRes.token);
+          localStorage.setItem('name',parseRes.username);
+          localStorage.setItem('email',parseRes.email);
+          localStorage.setItem('id',parseRes._id);
           setAuth(true)
-          alert('success register')
+          toast.success('success register')
         }else{
           setAuth(false)
-          alert(parseRes)
+          toast.error(parseRes)
         }
         } catch (err) {
           console.log(err.message)
@@ -67,12 +73,16 @@ const RegisterPage=({setAuth})=>{
         })
         const parseRes= await response.json()
         if(parseRes.token){
+          localStorage.setItem('pic',parseRes.pic);
           localStorage.setItem('token',parseRes.token);
+          localStorage.setItem('name',parseRes.username);
+          localStorage.setItem('email',parseRes.email);
+          localStorage.setItem('id',parseRes._id);
           setAuth(true)
-          alert('success login')
+          toast.success('success login')
         }else{
           setAuth(false)
-          alert(parseRes)
+          toast.error(parseRes)
         }
         } catch (err) {
           console.log(err.message)
@@ -83,10 +93,18 @@ const RegisterPage=({setAuth})=>{
         <div>
             {/*register modal*/}
             <div className='register customfont'>
-                <div className='registermodal'>
+                <div className='registermodal container'>
                 <h5 style={{borderBottom:'1px solid gray',width:'41%', margin:'0 auto', color:'rgb(226, 43, 165)'}}>register</h5> <br/>
                 <p style={{fontSize:'20px'}}></p>
                 <form onSubmit={handleSubmit1}>
+                  <label>
+                      <input type="file" id="photo" name="photo" onChange={(e)=>{setPic(e.target.value)}} />
+                      <span>
+                        <div className="btn-floating purple">
+                          <i className="material-icons" style={{color: '#f7eaf0'}}>add</i>
+                        </div> 
+                      </span>
+                    </label>
                     <input type='text'  placeholder="Enter username" name='username' onChange={(e)=>{setName(e.target.value)}} required className="form-control my-3"/>
                     <input type='text' placeholder="Enter email" name="email" required onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}}
@@ -98,7 +116,7 @@ const RegisterPage=({setAuth})=>{
             </div>
             {/*login modal */}
             <div className='login customfont'>
-                <div className='loginmodal'>
+                <div className='loginmodal container'>
                 <h5 style={{borderBottom:'1px solid gray',width:'41%', margin:'0 auto', color:'rgb(226, 43, 165)'}}>Login</h5> <br/>
                 <p style={{fontSize:'20px'}}></p>
                 <form onSubmit={handleSubmit2}>

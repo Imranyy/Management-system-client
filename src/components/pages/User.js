@@ -1,11 +1,44 @@
 import React,{Fragment} from "react";
-import Navbar from "../Navbar";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const User=()=>{
+const User=({setAuth})=>{
+    const name=localStorage.getItem('name')
+    const logout=async(e)=>{
+        try {
+            localStorage.removeItem('token')
+            localStorage.removeItem('name')
+            localStorage.removeItem('email')
+            setAuth(false)
+            toast.error("logout successfully")
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
     return(
     <Fragment>
-        <Navbar/>
-        <h1>User info</h1>
+        <nav className="cyran lighten-2" role="navigation">
+            <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
+            <div className="nav-wrapper container">
+            <ul className="left">
+            <li><Link to='/home'>Return</Link></li>
+            </ul>
+                <ul className="right">
+                    <li><Link to='/dashboard' className="light">{name}</Link></li>
+                    <li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li>
+                </ul>
+            
+                </div>
+        </nav>
+        <div className="container">
+
+        <h5 className="light customfont">This is the page where:
+          <ul>
+            <li>Personal info will be placed</li>
+            <li>History will be placed</li>
+          </ul>
+        </h5>
+      </div>
     </Fragment>
     )
 }

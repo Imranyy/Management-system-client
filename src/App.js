@@ -5,6 +5,7 @@ import RegisterPage from './components/pages/RegisterPage';
 import Dashboard from './components/pages/Dashboard';
 import NotFound from './components/pages/NotFound';
 import Amount from './components/pages/Amount';
+import About from './components/pages/About';
 import User from './components/pages/User';
 import {useState,useEffect} from 'react'
 const App=()=>{
@@ -34,12 +35,13 @@ const App=()=>{
   return (
     <Router>
     <Routes>
-      <Route path='/' element={!isAuthenticated ? <RegisterPage setAuth={setAuth}/> :<Navigate to='/home'/>}/>
-      <Route path='/home' element={isAuthenticated ? <HomePage setAuth={setAuth}/>:<Navigate to='/'/>}/>
-      <Route path='/dashboard' element={isAuthenticated ? <Dashboard setAuth={setAuth}/>:<Navigate to='/'/>}/>
-      <Route path='/user' element={isAuthenticated ? <User setAuth={setAuth}/>:<Navigate to='/'/>}/>
-      <Route path='/amount' element={isAuthenticated ? <Amount setAuth={setAuth}/>:<Navigate to='/'/>}/>
-      <Route path='*' element={<NotFound/>}/>
+      <Route path='/' element={!isAuthenticated ? (<RegisterPage setAuth={setAuth}/>) :(<Navigate to='/home' replace/>)}/>
+      <Route path='/home' element={isAuthenticated ? (<HomePage setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+      <Route path='/dashboard' element={isAuthenticated ? (<Dashboard setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+      <Route path='/user' element={isAuthenticated ? (<User setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+      <Route path='/amount' element={isAuthenticated ? (<Amount setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+      <Route path='/about' element={isAuthenticated ? (<About setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+      <Route path='*' element={<NotFound />}/>
     </Routes>
   </Router>
   );

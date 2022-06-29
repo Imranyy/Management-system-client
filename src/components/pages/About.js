@@ -2,7 +2,7 @@ import React,{Fragment} from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Amount=({setAuth})=>{
+const About=({setAuth})=>{
     const name=localStorage.getItem('name')
     const logout=async(e)=>{
         try {
@@ -34,33 +34,16 @@ const Amount=({setAuth})=>{
              {/*<!--content-->*/}
       <div className="container">
 
-        {/*<!--Amount balance-->*/}
-        
-            <div className="center-align">
-            <h4>Balance:</h4><br />
-            <div className="account-details">
-                <h5 className="center light">KSH: 234563</h5><br/><br/>
-                <div className="row container">
-                <div className="col s6 m6">
-                    Transaction: <p>20</p>
-                </div>
-                <div className="col s6 m6">
-                    Withdrawal: <p>2</p>
-                </div>
-                </div><br/>
-                <form> 
-                <div className="input-field container" style={{width: '80%'}}>
-                    <input type="number" id="fund" name="price" required />
-                    <label>Fund account</label>
-                </div><br/>
-                <button className="btn red lighten-1 z-depth-0">Done</button>
-                <p className="error"></p>
-            </form>
-            </div>
-            </div>
-
+        {/*<!--About info-->*/}
+        <h5 className="light customfont">This is the about page where:
+          <ul>
+            <li>About info will be placed</li>
+            <li>Help info will be placed</li>
+          </ul>
+        </h5>
+            
       </div>
         </Fragment>
     )
 }
- export default Amount
+ export default About;
