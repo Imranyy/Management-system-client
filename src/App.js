@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router,Route,Routes, Navigate} from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
+import Upload from './components/pages/Upload';
 import RegisterPage from './components/pages/RegisterPage';
 import Dashboard from './components/pages/Dashboard';
 import NotFound from './components/pages/NotFound';
@@ -35,7 +36,8 @@ const App=()=>{
   return (
     <Router>
     <Routes>
-      <Route path='/' element={!isAuthenticated ? (<RegisterPage setAuth={setAuth}/>) :(<Navigate to='/home' replace/>)}/>
+      <Route path='/' element={!isAuthenticated ? (<Upload />) :(<Navigate to='/home' replace/>)}/>
+      <Route path='/register' element={!isAuthenticated ? (<RegisterPage setAuth={setAuth}/>) :(<Navigate to='/home' replace/>)}/>
       <Route path='/home' element={isAuthenticated ? (<HomePage setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
       <Route path='/dashboard' element={isAuthenticated ? (<Dashboard setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
       <Route path='/user' element={isAuthenticated ? (<User setAuth={setAuth}/>):(<Navigate to='/'/>)}/>

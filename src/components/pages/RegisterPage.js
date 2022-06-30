@@ -16,7 +16,7 @@ const RegisterPage=({setAuth})=>{
       };
       
       //form inputs
-      const [pic,setPic]=useState('');
+      const pic=localStorage.getItem('pic')
       const [username,setName]=useState('');
       const [email,setEmail]=useState('');
       const [password, setPassword]=useState('');
@@ -89,6 +89,7 @@ const RegisterPage=({setAuth})=>{
         }
       }
 
+
     return(
         <div>
             {/*register modal*/}
@@ -97,14 +98,6 @@ const RegisterPage=({setAuth})=>{
                 <h5 style={{borderBottom:'1px solid gray',width:'41%', margin:'0 auto', color:'rgb(226, 43, 165)'}}>register</h5> <br/>
                 <p style={{fontSize:'20px'}}></p>
                 <form onSubmit={handleSubmit1}>
-                  <label>
-                      <input type="file" id="photo" name="photo" onChange={(e)=>{setPic(e.target.value)}} />
-                      <span>
-                        <div className="btn-floating purple">
-                          <i className="material-icons" style={{color: '#f7eaf0'}}>add</i>
-                        </div> 
-                      </span>
-                    </label>
                     <input type='text'  placeholder="Enter username" name='username' onChange={(e)=>{setName(e.target.value)}} required className="form-control my-3"/>
                     <input type='text' placeholder="Enter email" name="email" required onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}}
