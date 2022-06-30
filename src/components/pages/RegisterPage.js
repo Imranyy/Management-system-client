@@ -4,15 +4,15 @@ const RegisterPage=({setAuth})=>{
       const toReg=()=>{
         const register=document.querySelector('.register');
         const login=document.querySelector('.login');
-        login.classList.add('close');
-        register.classList.add('open')
+        login.classList.remove('open');
+        register.classList.remove('close')
       }
       
       const toLogin=()=>{
         const register=document.querySelector('.register');
         const login=document.querySelector('.login');
-        register.classList.remove('open');
-        login.classList.remove('close')
+        register.classList.add('close');
+        login.classList.add('open')
       };
       
       //form inputs
@@ -40,7 +40,7 @@ const RegisterPage=({setAuth})=>{
         })
         const parseRes=await response.json()
         if(parseRes.token){
-          localStorage.setItem('pic');
+          localStorage.setItem('pic',parseRes.pic);
           localStorage.setItem('token',parseRes.token);
           localStorage.setItem('name',parseRes.username);
           localStorage.setItem('email',parseRes.email);

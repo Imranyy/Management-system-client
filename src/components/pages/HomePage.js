@@ -41,6 +41,9 @@ const HomePage=({setAuth})=>{
     const handleDone=(e)=>{
 
     }
+    //modal
+  const modals=document.querySelectorAll('.modal');
+  M.Modal.init(modals);
     return(
         <div>
         <nav className="cyran lighten-2" role="navigation">
@@ -138,17 +141,17 @@ const HomePage=({setAuth})=>{
             <div className="card-content">
               <form onSubmit={handleDone()}>
 
-                    <div className="input-field" >
+                    <div className="input-field" id='site'>
                       <select name="media">
                         <option value="" disabled>Choose your site</option>
                         <option type="text" value="instagram">Instagram</option>
                         <option type="text" value="twitter">Twitter</option>
                         <option type="text" value="facebook">Facebook</option>
                       </select>
-                      <label>Site</label>
+                      <label htmlFor="site">Site</label>
                       </div>
 
-                      <div className="input-field" >
+                      <div className="input-field" id="choose">
                         <select name="choose">
                           <option value="" disabled >Choose</option>
                             <option type="text" value="followers">Followers</option>
@@ -157,7 +160,7 @@ const HomePage=({setAuth})=>{
                            <option type="text" value="tweets">Tweets</option>
                             <option type="text" value="followers">Followers</option>
                         </select>
-                        <label>Choose</label>
+                        <label htmlFor="choose">Choose</label>
                         </div>
 
                         <div className="input-field" >

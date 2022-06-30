@@ -1,55 +1,52 @@
-import {useNavigate} from 'react-router-dom'
+import { useState } from 'react';
+import img from '../../img.png'
+import {Link, useNavigate} from 'react-router-dom'
 import { projectStorage,ref,getDownloadURL,uploadBytesResumable} from '../../FirebaseConfig/FirebaseConfig';
 const Upload=()=>{
     const navigate=useNavigate();
-        const photo=document.querySelector('#photo');
-        const types=['image/png', 'image/jpeg']
-        photo.addEventListener('change',(e)=>{
-              let photoName=e.target.files[0];
-                const li=document.querySelector('.error');
-                const valid=document.querySelector('.valid');
-                const error=`
-                <p className="light red-text">Please select an image file(png or jpeg)<p>
-                `
-                const validFile= photoName.name;
-              if(photoName && types.includes(photoName.type)){
-                valid.innerHTML=validFile;
-                  li.innerHTML=''
-                  //uploading image to storage
-                  const storageRef=ref(projectStorage,photoName.name);
-                  const uploadTask = uploadBytesResumable(storageRef, photoName);
-                  uploadTask.on('state_changed',
-                   async()=>{
-                           await getDownloadURL(storageRef).then((url)=>{
-                            console.log(url);
-                            localStorage.setItem('pic',url);
-                           })
-                           })
-                           .then(()=>{
-                             navigate('/register')
-                           }).catch(()=>{
-                             alert('Try again!!')
-                           })
-                           
-                       
-                }else{
-                li.innerHTML=error;
-                valid.innerHTML='';
-              }
-          })
+    const [error,setError]=useState(null);
+    const [file,setFile]=useState(null);
+        const types=['image/png', 'image/jpeg'];
+
+          const changeHandler=(e)=>{
+            let selected=e.target.files[0]
+            if(selected&&types.includes(selected.type)){
+                setFile(selected)
+                setError('')
+                //uploading image to storage
+                const storageRef=ref(projectStorage,selected.name);
+                const uploadTask = uploadBytesResumable(storageRef, selected);
+                uploadTask.on('state_changed',
+                 async()=>{
+                         await getDownloadURL(storageRef).then((url)=>{
+                          console.log(url);
+                          localStorage.setItem('pic',url);
+                         }).then(()=>{
+                            navigate('/register')
+                          })
+                         })
+                         
+            }else{
+                setFile(null);
+                setError('Please select an image file(png or jpeg)')
+            }
+          }
     return(
-        <div id="form" className='container'>
+            <div id='form' className='container center'>
             <label>
-                <input type="file" id="photo" name="photo"/>
-                <span> Press the button to add an image to your blog: <br/>
-                <div className="btn-floating purple">
-                    <i className="material-icons" style={{color: '#f7eaf0'}}>add</i>
-                </div> 
+                <input type="file" onChange={changeHandler}/>
+                <span>  
+                    <img src={img} className="avatar circle img" alt='avatar' width='100'/>
+                <br/>
+                Set your profile pic:
                 </span>
             </label>
             <div className="output">
-                <div className="valid"></div>
-                <div className="error"></div>
+                {error&&<div className='error'>{error}</div>}
+                {file&&<div>{file.name}</div>}
+            </div>
+            <div className='center not'>
+                <Link to='/register'>Not Now</Link>
             </div>
         </div>
 

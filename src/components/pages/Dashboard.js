@@ -35,7 +35,7 @@ const Dashboard=({setAuth})=>{
             <h4>Dashboard:</h4><br />
             <div className="container">
             <div className='center'>
-         <img src={pic} className="avatar circle center"/>
+         <img src={pic} className="avatar circle img" alt='avatar' width='100'/><br/>
          <p className="light customfont">{name}</p>
          <p className="light customfont">{email}</p>
          <p className="light customfont" style={{fontSize: '12px'}}>User id: {id}</p>

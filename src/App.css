@@ -1,8 +1,12 @@
 *{
   padding: 0;
   margin: 0;
-  font-family: monospace;
+  font-family: monospace; 
 }
+body{
+  background: #f1efef;
+}
+
 /*custom css*/
 .customfont{
   font-family: monospace;
@@ -14,10 +18,10 @@
   position: fixed;
   background: rgba(0,0,0,0.4);
   z-index: 3;
-  display: block;
-}
-.login.close{
   display: none;
+}
+.login.open{
+  display: block;
 }
 .loginmodal{
   width: 60%;
@@ -36,10 +40,10 @@
   position: fixed;
   background: rgba(0,0,0,0.4);
   z-index: 3;
-  display:  none;
+  display:  block;
 }
-.register.open{
-  display: block;
+.register.close{
+  display: none;
 }
 .registermodal{
   width: 60%;
@@ -50,4 +54,22 @@
   border-radius: 5px;
   box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
   text-align: center;
+}
+label input{
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+#form{
+  margin-top: 150px ;
+}
+.img{
+  cursor: pointer;
+}
+.not{
+  margin-top: 30% ;
+}
+.error{
+  color: #b13737;
 }
