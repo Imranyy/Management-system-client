@@ -1,4 +1,5 @@
 import './App.css';
+import './Materializecss';
 import { BrowserRouter as Router,Route,Routes, Navigate} from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import Upload from './components/pages/Upload';

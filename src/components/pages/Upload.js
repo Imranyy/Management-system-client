@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import img from '../../img.png'
+import img from '../../img.png';
 import {Link, useNavigate} from 'react-router-dom'
 import { projectStorage,ref,getDownloadURL,uploadBytesResumable} from '../../FirebaseConfig/FirebaseConfig';
 const Upload=()=>{

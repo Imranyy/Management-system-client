@@ -1,8 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
+import Select from 'react-select';
+import Modal from 'react-modal'
 
+const customStyles={
+  content:{
+    background:'#f2f2f2',
+    top:'15%',
+    left:'38%',
+    right:'auto',
+    bottom:'auto',
+    transform:'translate(-50%.-50%)'
+  },
+}
+
+Modal.setAppElement('#root')
 const HomePage=({setAuth})=>{
     const name=localStorage.getItem('name')
     const getName=async()=>{
@@ -38,12 +52,65 @@ const HomePage=({setAuth})=>{
         getName();
     },[])
 
-    const handleDone=(e)=>{
+   
+    const options=[
+      {value:'instagram', label:'instagram'},
+      {value:'facebook',label:'facebook'},
+      {value:'twitter',label:'twitter'}
+    ];
+    const options2=[
+      {value:'followers',label:'followers'},
+      {value:'likes',label:'likes'},
+      {value:'comments',label:'commments'},
+      {value:'tweets',label:'tweets'},
+      {value:'Follower',label:'followers'}
+    ]
 
+    //modal stuff
+    const [modalIsOpen, setIsOpen]=useState(false);
+    const [modalIsOpen2,setIsOpen2]=useState(false);
+    const [modalIsOpen3,setIsOpen3]=useState(false);
+      //modal1
+    const openModal=()=>{
+      setIsOpen(true)
     }
-    //modal
-  const modals=document.querySelectorAll('.modal');
-  M.Modal.init(modals);
+    const closeModal=()=>{
+      setIsOpen(false);
+    }
+    //modal2
+    const openModal2=()=>{
+      setIsOpen2(true)
+    }
+    const closeModal2=()=>{
+      setIsOpen2(false)
+    }
+    //modal3
+    const openModal3=()=>{
+      setIsOpen3(true)
+    }
+    const closeModal3=()=>{
+      setIsOpen3(false)
+    }
+    //main form
+    const[media,setMedia]=useState(null);
+    const [choose, setChoose]=useState(null);
+    const [username,setUsername]=useState('');
+    const[amount,setAmount]=useState('');
+    const[price,setPrice]=useState('');
+    const handleDone=(e)=>{
+      e.preventDefault()
+      //console.log(choose,media,username,amount,price)
+      localStorage.setItem('username',username);
+      localStorage.setItem('choose',choose);
+      localStorage.setItem('amount',amount);
+      localStorage.setItem('price',price);
+      localStorage.setItem('media',media);
+
+      //redirect after submitting form
+      window.location.href=`https://${localStorage.getItem('media')}.com/${localStorage.getItem('username')}`
+    }
+
+
     return(
         <div>
         <nav className="cyran lighten-2" role="navigation">
@@ -61,9 +128,15 @@ const HomePage=({setAuth})=>{
     </nav>
             
     {/*<!--modalstats-->*/}
-    <div id="modal-stats" className="modal">
-      <div className="modal-content center-align">
-        <h4>Add Statistics:</h4><br />
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+      contentLabel='Example Modal'
+      >
+      <div className="center-align">
+        <h4>Add Statistics:</h4>
+        <button className="right" onClick={closeModal}>close</button><br/>
         <div className="account-details">
           <form id="answer-form">
             <div className="input-field">
@@ -87,11 +160,17 @@ const HomePage=({setAuth})=>{
           </form>
         </div>
       </div>
-    </div> 
+    </Modal> 
    {/*<!--modalreview-->*/}
-   <div id="modal-review" className="modal">
+   <Modal
+      isOpen={modalIsOpen2}
+      onRequestClose={closeModal2}
+      style={customStyles}
+      contentLabel='Example Modal'
+      >
     <div className="modal-content center-align">
-      <h4>Add Review:</h4><br />
+      <h4>Add Review:</h4>
+      <button onClick={closeModal2}>close</button><br />
       <div className="account-details">
         <form id="answer-form">
           <div className="input-field">
@@ -107,11 +186,17 @@ const HomePage=({setAuth})=>{
         </form>
       </div>
     </div>
-  </div>
+  </Modal>
   {/*<!--modalhistory--> */}
-  <div id="modal-history" className="modal">
+  <Modal
+      isOpen={modalIsOpen3}
+      onRequestClose={closeModal3}
+      style={customStyles}
+      contentLabel='Example Modal'
+      >
     <div className="modal-content center-align">
-      <h4>Add History:</h4><br />
+      <h4>Add History:</h4>
+      <button onClick={closeModal3}>close</button><br />
       <div className="account-details">
         <form id="answer-form">
           <div className="input-field">
@@ -131,7 +216,7 @@ const HomePage=({setAuth})=>{
         </form>
       </div>
     </div>
-  </div>
+  </Modal>
 
   {/*<!--content--> */}
 <div className="container">
@@ -139,42 +224,23 @@ const HomePage=({setAuth})=>{
         <div className="card">
             <div className="card-title" style={{marginLeft: '8%'}}><h4 className="light customfont">AddMeUp. org</h4></div>
             <div className="card-content">
-              <form onSubmit={handleDone()}>
+              <form onSubmit={handleDone}>
+                      <Select name="media" options={options} onChange={(e)=>{setMedia(e.value)}}/><br/>
 
-                    <div className="input-field" id='site'>
-                      <select name="media">
-                        <option value="" disabled>Choose your site</option>
-                        <option type="text" value="instagram">Instagram</option>
-                        <option type="text" value="twitter">Twitter</option>
-                        <option type="text" value="facebook">Facebook</option>
-                      </select>
-                      <label htmlFor="site">Site</label>
-                      </div>
-
-                      <div className="input-field" id="choose">
-                        <select name="choose">
-                          <option value="" disabled >Choose</option>
-                            <option type="text" value="followers">Followers</option>
-                            <option type="text" value="likes">Likes</option>
-                            <option type="text" value="comments">Comments</option>
-                           <option type="text" value="tweets">Tweets</option>
-                            <option type="text" value="followers">Followers</option>
-                        </select>
-                        <label htmlFor="choose">Choose</label>
-                        </div>
+                      <Select name="choose" options={options2} onChange={(e)=>{setChoose(e.value)}}/>
 
                         <div className="input-field" >
-                          <input type="text" id="username" name="username"  />
+                          <input type="text" onChange={(e)=>{setUsername(e.target.value)}} name="username"  />
                           <label>Enter Username</label>
                          </div>
 
                       <div className="input-field">
-                      <input type="number" id="amount" name="amount" />
+                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" />
                       <label>Enter Amount</label>
                      </div>
 
                      <div className="input-field">
-                     <input type="number" id="price" name="price" />
+                     <input type="number" onChange={(e)=>{setPrice(e.target.value)}} name="price" />
                      <label >Price</label>
                     </div>
 
@@ -184,7 +250,6 @@ const HomePage=({setAuth})=>{
         </div>
     </div>  
 </div>
-
 <div className="container">
     <div className="section">
 
@@ -194,7 +259,7 @@ const HomePage=({setAuth})=>{
           <div className="icon-block">
             <h3 className="center">Stats <i className="material-icons">topic</i></h3>
                 <div className="card">
-                  <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a className="btn-floating waves-effect waves-light red modal-trigger" data-target="modal-stats"><i className="material-icons">add</i></a></div>
+                  <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a onClick={openModal}><i className="material-icons red-text lighen-1">add</i></a></div>
                   <div className="card-content">
                     <p className="light"> Likes: 134243243423</p>
                     <p className="light">Followers: 12556</p>
@@ -209,7 +274,7 @@ const HomePage=({setAuth})=>{
           <div className="icon-block">
             <h3 className="center">Reviews <i className="material-icons">hive</i></h3>
             <div className="card">
-              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a className="btn-floating waves-effect waves-light red modal-trigger" data-target="modal-review" ><i className="material-icons">add</i></a></div>
+              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a  onClick={openModal2} ><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
                 <p className="light"> Joel: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
                 <p className="light">Daniel: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
@@ -223,7 +288,7 @@ const HomePage=({setAuth})=>{
         <div className="col s12 m4">
           <div className="icon-block">
             <h3 className="center">History <i className="material-icons">history</i></h3><div className="card">
-              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a className="btn-floating waves-effect waves-light red modal-trigger"  data-target="modal-history"><i className="material-icons">add</i></a></div>
+              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a   onClick={openModal3}><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
                 <p className="light"> User 601: 10K 2sec</p>
                 <p className="light">User 602: 5k 3sec</p>
