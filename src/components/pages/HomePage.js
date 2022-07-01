@@ -8,9 +8,8 @@ import Modal from 'react-modal'
 const customStyles={
   content:{
     background:'#f2f2f2',
-    top:'15%',
-    left:'38%',
-    right:'auto',
+    top:'12%',
+    left:'35px',
     bottom:'auto',
     transform:'translate(-50%.-50%)'
   },
@@ -18,7 +17,8 @@ const customStyles={
 
 Modal.setAppElement('#root')
 const HomePage=({setAuth})=>{
-    const name=localStorage.getItem('name')
+    const name=localStorage.getItem('name');
+    //const pic=localStorage.getItem('pic');
     const getName=async()=>{
         try {
             const url="http://localhost:5000/api/userdata"
@@ -121,7 +121,7 @@ const HomePage=({setAuth})=>{
           </ul>
             <ul className="right">
                 <li><Link to='/dashboard' className="light">{name}</Link></li>
-                  <li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li>
+                  {/*<li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li> */}
             </ul>
            
             </div>

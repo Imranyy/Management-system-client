@@ -103,7 +103,7 @@ const RegisterPage=({setAuth})=>{
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}}
                     required className="form-control my-3"/>
                     <button className="btn-small waves-effect waves-light left" type='submit' style={{marginTop:'40px', backgroundColor: 'rgb(226, 43, 165)'}}>Register</button>
-                    <a onClick={toLogin} className="right" style={{cursor: 'pointer', marginTop: '50px'}}>I have an account!</a>
+                    <a onClick={toLogin} className="right" style={{cursor: 'pointer', marginTop: '10px'}}>I have an account!</a>
                     </form>
                 </div>
             </div>

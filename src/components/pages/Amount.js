@@ -25,7 +25,7 @@ const Amount=({setAuth})=>{
             </ul>
                 <ul className="right">
                     <li><Link to='/dashboard' className="light">{name}</Link></li>
-                    <li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li>
+                    {/*<li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li> */}
                 </ul>
             
                 </div>
