@@ -1,5 +1,4 @@
 import './App.css';
-import './Materializecss';
 import { BrowserRouter as Router,Route,Routes, Navigate} from 'react-router-dom';
 import HomePage from './components/pages/HomePage';
 import Upload from './components/pages/Upload';
@@ -18,7 +17,7 @@ const App=()=>{
 
   const checkAuthenticated=async()=>{
     try {
-      const url='http://localhost:5000/api/verify'
+      const url='https://project-api-version1.herokuapp.com/api/verify'
       const response=await fetch(url,{
         method:'GET',
         headers:{

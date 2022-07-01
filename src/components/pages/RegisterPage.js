@@ -25,7 +25,7 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit1=async(e)=>{
         e.preventDefault()
         try {
-          const url='http://localhost:5000/api/register';
+          const url='https://project-api-version1.herokuapp.com/api/register';
           const response= await fetch(url,{
             method:'post',
             body:JSON.stringify({
@@ -60,7 +60,7 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit2=async(e)=>{
         e.preventDefault()
         try {
-          const url='http://localhost:5000/api/login'
+          const url='https://project-api-version1.herokuapp.com/api/login'
           const response= await fetch(url,{
             method:'POST',
             body:JSON.stringify({

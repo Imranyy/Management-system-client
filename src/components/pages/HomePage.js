@@ -21,7 +21,7 @@ const HomePage=({setAuth})=>{
     //const pic=localStorage.getItem('pic');
     const getName=async()=>{
         try {
-            const url="http://localhost:5000/api/userdata"
+            const url="https://project-api-version1.herokuapp.com/api/userdata"
             const response=await fetch(url,{
                 method:"GET",
                 headers:{
