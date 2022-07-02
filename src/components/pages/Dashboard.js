@@ -1,9 +1,16 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import img from '../../img.png';
 const Dashboard=({setAuth})=>{
     const name=localStorage.getItem('name');
     const email=localStorage.getItem('email');
-    const pic=localStorage.getItem('pic');
+    const [pic,setPic]=useState('')
+    if(localStorage.getItem('pic')==='null'){
+        setPic(img)
+    }else{
+        setPic(localStorage.getItem('pic'));
+    }
     const id=localStorage.getItem('id')
     const logout=async(e)=>{
         try {
@@ -13,7 +20,26 @@ const Dashboard=({setAuth})=>{
             localStorage.removeItem('pic');
             localStorage.removeItem('id');
             setAuth(false)
-            toast.error('logout successfully')
+            toast.success('logout successfully')
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+    const deleteAccount=async()=>{
+        try {
+            const url=`https://project-api-version1.herokuapp.com/api/${localStorage.getItem('id')}`
+            const deleteUser= await fetch(url,{
+                method:"DELETE"
+            })
+            const response=await deleteUser.json()
+            console.log(response)
+            localStorage.removeItem('token');
+            localStorage.removeItem('name');
+            localStorage.removeItem('email');
+            localStorage.removeItem('pic');
+            localStorage.removeItem('id');
+            setAuth(false)
+            toast.success('Account Delete')
         } catch (err) {
             console.log(err.message)
         }
@@ -47,7 +73,8 @@ const Dashboard=({setAuth})=>{
          <li> <Link to='/Amount'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
-        </ul>
+        </ul><br/>
+        <a className="light" onClick={deleteAccount}>Delete My Account</a>
             </div>
             <div className="container"><a onClick={(e)=>logout(e)} className="btn-small light" >Log out</a></div>
             </div>

@@ -140,20 +140,16 @@ const HomePage=({setAuth})=>{
         <div className="account-details">
           <form id="answer-form">
             <div className="input-field">
-              <input type="text" id="site" name="site" required />
-              <label >Likes:</label>
+              <input type="text" id="site" name="site" required placeholder="Likes:"/> 
               </div>
               <div className="input-field">
-              <input type="text" id="choice" name="choice" required />
-              <label>Followers</label>
+              <input type="text" id="choice" name="choice" required placeholder="Followers"/>
               </div>
               <div className="input-field">
-              <input type="number" id="amount" name="amount" required />
-              <label>Comment</label>
+              <input type="number" id="amount" name="amount" required placeholder="Comment"/>
              </div>
              <div className="input-field">
-             <input type="number" id="price" name="price" required />
-             <label>Live</label>
+             <input type="number" id="price" name="price" required placeholder="Live"/>
             </div>
             <button className="btn red lighten-1 z-depth-0">Done</button>
             <p className="error"></p>
@@ -174,12 +170,10 @@ const HomePage=({setAuth})=>{
       <div className="account-details">
         <form id="answer-form">
           <div className="input-field">
-            <input type="text" id="site" name="site" required />
-            <label>Enter Username</label>
+            <input type="text" id="site" name="site" required placeholder="Enter Username"/>
             </div>
             <div className="input-field">
-            <input type="text" id="choice" name="choice" required />
-            <label>Enter Review</label>
+            <input type="text" id="choice" name="choice" required placeholder="Enter Review"/>
             </div>
           <button className="btn red lighten-1 z-depth-0">Done</button>
           <p className="error"></p>
@@ -200,16 +194,13 @@ const HomePage=({setAuth})=>{
       <div className="account-details">
         <form id="answer-form">
           <div className="input-field">
-            <input type="text" id="site" name="site" required />
-            <label>Enter User No.</label>
+            <input type="text" id="site" name="site" required placeholder="Enter User No."/>
             </div>
             <div className="input-field">
-            <input type="text" id="choice" name="choice" required />
-            <label>Enter Followers</label>
+            <input type="text" id="choice" name="choice" required placeholder="Enter Followers"/>
             </div>
             <div className="input-field">
-            <input type="number" id="amount" name="amount" required />
-            <label>Time</label>
+            <input type="number" id="amount" name="amount" required placeholder="Time"/>
            </div>
           <button className="btn red lighten-1 z-depth-0">Done</button>
           <p className="error"></p>
@@ -230,18 +221,15 @@ const HomePage=({setAuth})=>{
                       <Select name="choose" options={options2} onChange={(e)=>{setChoose(e.value)}}/>
 
                         <div className="input-field" >
-                          <input type="text" onChange={(e)=>{setUsername(e.target.value)}} name="username"  />
-                          <label>Enter Username</label>
+                          <input type="text" onChange={(e)=>{setUsername(e.target.value)}} name="username" placeholder="Enter Username" />
                          </div>
 
                       <div className="input-field">
-                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" />
-                      <label>Enter Amount</label>
+                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" placeholder="Enter Amount"/>
                      </div>
 
                      <div className="input-field">
-                     <input type="number" onChange={(e)=>{setPrice(e.target.value)}} name="price" />
-                     <label >Price</label>
+                     <input type="number" onChange={(e)=>{setPrice(e.target.value)}} name="price" placeholder="Price" />
                     </div>
 
                     <button className="btn red lighten-1 z-depth-0">Done</button>
