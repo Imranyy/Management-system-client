@@ -1,6 +1,6 @@
 import React,{Fragment} from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const Amount=({setAuth})=>{
     const name=localStorage.getItem('name')
@@ -33,7 +33,7 @@ const Amount=({setAuth})=>{
 
              {/*<!--content-->*/}
       <div className="container">
-
+        
         {/*<!--Amount balance-->*/}
         
             <div className="center-align">

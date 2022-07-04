@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toast } from 'react-toastify';
+import toast from "react-hot-toast";
 const RegisterPage=({setAuth})=>{
       const toReg=()=>{
         const register=document.querySelector('.register');
@@ -25,7 +25,7 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit1=async(e)=>{
         e.preventDefault()
         try {
-          const url='https://project-api-version1.herokuapp.com/api/register';
+          const url='http://localhost:3000/api/register';
           const response= await fetch(url,{
             method:'post',
             body:JSON.stringify({
@@ -60,7 +60,7 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit2=async(e)=>{
         e.preventDefault()
         try {
-          const url='https://project-api-version1.herokuapp.com/api/login'
+          const url='http://localhost:3000/api/login'
           const response= await fetch(url,{
             method:'POST',
             body:JSON.stringify({
@@ -107,6 +107,7 @@ const RegisterPage=({setAuth})=>{
                     </form>
                 </div>
             </div>
+            
             {/*login modal */}
             <div className='login customfont'>
                 <div className='loginmodal container'>

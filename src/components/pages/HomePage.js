@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import toast, { Toaster } from "react-hot-toast";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import Select from 'react-select';
@@ -21,7 +21,7 @@ const HomePage=({setAuth})=>{
     //const pic=localStorage.getItem('pic');
     const getName=async()=>{
         try {
-            const url="https://project-api-version1.herokuapp.com/api/userdata"
+            const url="http://localhost:3000/api/userdata"
             const response=await fetch(url,{
                 method:"GET",
                 headers:{
@@ -126,7 +126,7 @@ const HomePage=({setAuth})=>{
            
             </div>
     </nav>
-            
+            <Toaster/>
     {/*<!--modalstats-->*/}
     <Modal
       isOpen={modalIsOpen}
@@ -138,22 +138,7 @@ const HomePage=({setAuth})=>{
         <h4>Add Statistics:</h4>
         <button className="right" onClick={closeModal}>close</button><br/>
         <div className="account-details">
-          <form id="answer-form">
-            <div className="input-field">
-              <input type="text" id="site" name="site" required placeholder="Likes:"/> 
-              </div>
-              <div className="input-field">
-              <input type="text" id="choice" name="choice" required placeholder="Followers"/>
-              </div>
-              <div className="input-field">
-              <input type="number" id="amount" name="amount" required placeholder="Comment"/>
-             </div>
-             <div className="input-field">
-             <input type="number" id="price" name="price" required placeholder="Live"/>
-            </div>
-            <button className="btn red lighten-1 z-depth-0">Done</button>
-            <p className="error"></p>
-          </form>
+          
         </div>
       </div>
     </Modal> 
@@ -169,14 +154,10 @@ const HomePage=({setAuth})=>{
       <button onClick={closeModal2}>close</button><br />
       <div className="account-details">
         <form id="answer-form">
-          <div className="input-field">
-            <input type="text" id="site" name="site" required placeholder="Enter Username"/>
-            </div>
             <div className="input-field">
             <input type="text" id="choice" name="choice" required placeholder="Enter Review"/>
             </div>
-          <button className="btn red lighten-1 z-depth-0">Done</button>
-          <p className="error"></p>
+          <button className="btn red lighten-1 z-depth-0">Submit</button>
         </form>
       </div>
     </div>
@@ -192,19 +173,7 @@ const HomePage=({setAuth})=>{
       <h4>Add History:</h4>
       <button onClick={closeModal3}>close</button><br />
       <div className="account-details">
-        <form id="answer-form">
-          <div className="input-field">
-            <input type="text" id="site" name="site" required placeholder="Enter User No."/>
-            </div>
-            <div className="input-field">
-            <input type="text" id="choice" name="choice" required placeholder="Enter Followers"/>
-            </div>
-            <div className="input-field">
-            <input type="number" id="amount" name="amount" required placeholder="Time"/>
-           </div>
-          <button className="btn red lighten-1 z-depth-0">Done</button>
-          <p className="error"></p>
-        </form>
+        
       </div>
     </div>
   </Modal>
@@ -225,7 +194,7 @@ const HomePage=({setAuth})=>{
                          </div>
 
                       <div className="input-field">
-                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" placeholder="Enter Amount"/>
+                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" placeholder="Enter Amount of Followers you want"/>
                      </div>
 
                      <div className="input-field">
@@ -247,7 +216,7 @@ const HomePage=({setAuth})=>{
           <div className="icon-block">
             <h3 className="center">Stats <i className="material-icons">topic</i></h3>
                 <div className="card">
-                  <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a onClick={openModal}><i className="material-icons red-text lighen-1">add</i></a></div>
+                  <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a onClick={openModal}><i className="material-icons red-text lighen-1">inventory</i></a></div>
                   <div className="card-content">
                     <p className="light"> Likes: 134243243423</p>
                     <p className="light">Followers: 12556</p>
@@ -276,7 +245,7 @@ const HomePage=({setAuth})=>{
         <div className="col s12 m4">
           <div className="icon-block">
             <h3 className="center">History <i className="material-icons">history</i></h3><div className="card">
-              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a   onClick={openModal3}><i className="material-icons red-text lighen-1">add</i></a></div>
+              <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a   onClick={openModal3}><i className="material-icons red-text lighen-1">inventory</i></a></div>
               <div className="card-content">
                 <p className="light"> User 601: 10K 2sec</p>
                 <p className="light">User 602: 5k 3sec</p>

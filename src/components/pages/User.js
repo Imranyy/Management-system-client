@@ -1,6 +1,6 @@
 import React,{Fragment} from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 const User=({setAuth})=>{
     const name=localStorage.getItem('name')
@@ -31,7 +31,7 @@ const User=({setAuth})=>{
                 </div>
         </nav>
         <div className="container">
-
+        
         <h5 className="light customfont">This is the page where:
           <ul>
             <li>Personal info will be placed</li>
