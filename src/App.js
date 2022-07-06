@@ -20,7 +20,7 @@ const App=()=>{
 
   const checkAuthenticated=async()=>{
     try {
-      const url='http://localhost:3000/api/verify'
+      const url=' https://project-api-version1.herokuapp.com/api/verify'
       const response=await fetch(url,{
         method:'GET',
         headers:{

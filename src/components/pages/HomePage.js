@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import Select from 'react-select';
 import Modal from 'react-modal'
+import { stringify } from "@firebase/util";
 
 const customStyles={
   content:{
@@ -32,7 +33,7 @@ const HomePage=({setAuth})=>{
             localStorage.setItem('name',parseRes.username)
             localStorage.setItem('email',parseRes.email)
         } catch (err) {
-            console.log(err.message) 
+            console.log(err) 
         }
     };
     const logout=async(e)=>{
@@ -96,21 +97,110 @@ const HomePage=({setAuth})=>{
     const [choose, setChoose]=useState(null);
     const [username,setUsername]=useState('');
     const[amount,setAmount]=useState('');
-    const[price,setPrice]=useState('');
-    const handleDone=(e)=>{
+    const price=amount*2;
+    const handleDone=async(e)=>{
       e.preventDefault()
-      //console.log(choose,media,username,amount,price)
-      localStorage.setItem('username',username);
-      localStorage.setItem('choose',choose);
-      localStorage.setItem('amount',amount);
-      localStorage.setItem('price',price);
-      localStorage.setItem('media',media);
-
+      try {
+        const email=localStorage.getItem('email');
+        const url=' https://project-api-version1.herokuapp.com/data/orders';
+        const response=await fetch(url,{
+          method:"POST",
+          body:JSON.stringify({
+            email:email,
+            username:username,
+            choose:choose,
+            media:media,
+            amount:amount,
+            price:price
+          }),
+          headers:{
+            'Content-Type':'application/json'
+          }
+        })
+        const parseRes=await response.json()
+        localStorage.setItem('date',parseRes.createdAt)
+        localStorage.setItem('username',parseRes.username)
+        localStorage.setItem('choose',parseRes.choose)
+        localStorage.setItem('media',parseRes.media)
+        localStorage.setItem('amount',parseRes.amount)
+        localStorage.setItem('price',parseRes.price)
+        toast.success('Order Posted')
+      } catch (error) {
+        console.log(error)
+      }
       //redirect after submitting form
-      window.location.href=`https://${localStorage.getItem('media')}.com/${localStorage.getItem('username')}`
+     // window.location.href=`https://${localStorage.getItem('media')}.com/${localStorage.getItem('username')}`
     }
+    
 
+    //post review
+const [review,setReview]=useState('');
+const handleReview=async(e)=>{
+  e.preventDefault();
+  const url=' https://project-api-version1.herokuapp.com/data/reviews'
+  const response=await fetch(url,{
+    method:"POST",
+    body:JSON.stringify({
+      name:localStorage.getItem('name'),
+      review:review
+    }),
+    headers:{
+      'Content-Type':'application/json'
+    }
+  })
+  const parseRes=await response.json();
+  closeModal2();
+  toast.success('review posted')
+}
+//get reviews
+const[rev,setRev]=useState('')
+const getReview=async()=>{
+  try {
+    const url=' https://project-api-version1.herokuapp.com/data/reviews';
+    const response=await fetch(url,{
+      method:"GET"
+    })
+    const parseRes=await response.json();
+    setRev(parseRes)
 
+  } catch (error) {
+    console.log(error)
+  }
+}
+useEffect(()=>{
+  getReview();
+  //getUserhistory();
+  getSta();
+},[])
+
+//get userhistory
+/*const [history,setHistory]=useState('')
+const getUserhistory=async()=>{
+  try {
+    const url='http://localhost:5000/data/orders';
+    const response=await fetch(url,{
+      method:'GET'
+    })
+    const parseRes=await response.json();
+    setHistory(parseRes)
+  } catch (error) {
+    console.log(error)
+  }
+}*/
+//get stats
+const[sta,setSta]=useState('');
+const getSta=async()=>{
+  try {
+    const url=' https://project-api-version1.herokuapp.com/data/stats';
+    const response=await fetch(url,{
+      method:"GET"
+    })
+    const parseRes=await response.json()
+    setSta(parseRes)
+  } catch (error) {
+    console.log(error)
+  }
+}
     return(
         <div>
         <nav className="cyran lighten-2" role="navigation">
@@ -138,7 +228,9 @@ const HomePage=({setAuth})=>{
         <h4>Add Statistics:</h4>
         <button className="right" onClick={closeModal}>close</button><br/>
         <div className="account-details">
-          
+          {sta&&sta.map((st)=>(
+            <><p>Likes:.{st.likes}<br/>Followers:.{st.followers}<br/>Comments:.{st.comments}<br/>Lives:.{st.lives}</p><br/></>
+          ))}
         </div>
       </div>
     </Modal> 
@@ -153,9 +245,9 @@ const HomePage=({setAuth})=>{
       <h4>Add Review:</h4>
       <button onClick={closeModal2}>close</button><br />
       <div className="account-details">
-        <form id="answer-form">
+        <form onSubmit={handleReview}>
             <div className="input-field">
-            <input type="text" id="choice" name="choice" required placeholder="Enter Review"/>
+            <input type="text" onChange={(e)=>{setReview(e.target.value)}} name="review" required placeholder="Enter Review"/>
             </div>
           <button className="btn red lighten-1 z-depth-0">Submit</button>
         </form>
@@ -173,7 +265,7 @@ const HomePage=({setAuth})=>{
       <h4>Add History:</h4>
       <button onClick={closeModal3}>close</button><br />
       <div className="account-details">
-        
+          <><p className='right'>Created On:.{localStorage.getItem('date')}</p><br/><p>username:.{localStorage.getItem('username')}<br/>Service:.{localStorage.getItem('choose')}<br/>Site:.{localStorage.getItem('media')}<br/>Amount of followers:.{localStorage.getItem('amount')}<br/>To_pay:.{localStorage.getItem('price')}</p><br/></>
       </div>
     </div>
   </Modal>
@@ -185,22 +277,22 @@ const HomePage=({setAuth})=>{
             <div className="card-title" style={{marginLeft: '8%'}}><h4 className="light customfont">AddMeUp. org</h4></div>
             <div className="card-content">
               <form onSubmit={handleDone}>
-                      <Select name="media" options={options} onChange={(e)=>{setMedia(e.value)}}/><br/>
+                      <Select name="media" options={options} onChange={(e)=>{setMedia(e.value)}} required/><br/>
 
-                      <Select name="choose" options={options2} onChange={(e)=>{setChoose(e.value)}}/>
+                      <Select name="choose" options={options2} onChange={(e)=>{setChoose(e.value)}} required/>
 
                         <div className="input-field" >
-                          <input type="text" onChange={(e)=>{setUsername(e.target.value)}} name="username" placeholder="Enter Username" />
+                          <input type="text" onChange={(e)=>{setUsername(e.target.value)}} name="username" placeholder="Enter Instagram or Twitter Username" required/>
                          </div>
 
                       <div className="input-field">
-                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" placeholder="Enter Amount of Followers you want"/>
+                      <input type="number" onChange={(e)=>{setAmount(e.target.value)}} name="amount" placeholder="Enter Amount of Followers you want" required/>
                      </div>
 
                      <div className="input-field">
-                     <input type="number" onChange={(e)=>{setPrice(e.target.value)}} name="price" placeholder="Price" />
+                     <p className="light">Price: ksh {price}</p>
                     </div>
-
+                        
                     <button className="btn red lighten-1 z-depth-0">Done</button>
                   </form>
             </div>
@@ -218,10 +310,9 @@ const HomePage=({setAuth})=>{
                 <div className="card">
                   <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a onClick={openModal}><i className="material-icons red-text lighen-1">inventory</i></a></div>
                   <div className="card-content">
-                    <p className="light"> Likes: 134243243423</p>
-                    <p className="light">Followers: 12556</p>
-                    <p className="light">Comments: 2233</p>
-                    <p className="light">Live: 94435</p>
+                  {sta&&sta.map((st)=>(
+                    <><p>Likes:.{st.likes}<br/>Followers:.{st.followers}<br/>Comments:.{st.comments}<br/>Lives:.{st.lives}</p><br/></>
+                     ))}
                   </div>
                 </div>
              </div>
@@ -233,10 +324,9 @@ const HomePage=({setAuth})=>{
             <div className="card">
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a  onClick={openModal2} ><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
-                <p className="light"> Joel: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
-                <p className="light">Daniel: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
-                <p className="light">Joseph: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
-                <p className="light">Ben: <i className="material-icons">star</i><i className="material-icons">star</i><i className="material-icons">star</i></p>
+              {rev && rev.map((revs)=>(
+                  <><p> username:.{revs.name}  <br />review:.{revs.review}</p><br /></>
+                ))}
               </div>
             </div>
           </div>
@@ -247,10 +337,7 @@ const HomePage=({setAuth})=>{
             <h3 className="center">History <i className="material-icons">history</i></h3><div className="card">
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a   onClick={openModal3}><i className="material-icons red-text lighen-1">inventory</i></a></div>
               <div className="card-content">
-                <p className="light"> User 601: 10K 2sec</p>
-                <p className="light">User 602: 5k 3sec</p>
-                <p className="light">User 603: 3k 10sec</p>
-                <p className="light">User 604: 100 1hr</p>
+                <p className='light'>view Your activities</p>
               </div>
             </div>
           </div>

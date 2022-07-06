@@ -35,7 +35,7 @@ const Dashboard=({setAuth})=>{
     }
     const deleteAccount=async()=>{
         try {
-            const url=`http://localhost:3000/api/${id}`
+            const url=` https://project-api-version1.herokuapp.com/api/${id}`
             const deleteUser= await fetch(url,{
                 method:"DELETE"
             })
@@ -51,6 +51,14 @@ const Dashboard=({setAuth})=>{
         } catch (err) {
             console.log(err.message)
         }
+    }
+    //admin
+    const adminAccount=async()=>{
+      try {
+        
+      } catch (error) {
+        console.log(error.message)
+      }
     }
     //modal
     const [modalIsOpen,setIsOpen]=useState(false);
@@ -81,7 +89,7 @@ const Dashboard=({setAuth})=>{
                           localStorage.setItem('pic',url);
                          }).then(()=>{
                             closeModal()
-                            const url=`http://localhost:3000/api/${localStorage.getItem('id')}`
+                            const url=` https://project-api-version1.herokuapp.com/api/${localStorage.getItem('id')}`
                             const update=localStorage.getItem('pic')
                             fetch(url,{
                                 method:'PATCH',
@@ -153,13 +161,12 @@ const Dashboard=({setAuth})=>{
          <p className="light customfont" style={{fontSize: '12px'}}>User id: {id}</p>
          </div>
          <ul>
-         <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Personal Info</h5></Link></li>
-         <li> <Link to='/Amount'><i className='material-icons left'>account_circle</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Account</h5></Link></li>
          <li> <Link to='/user'><i className='material-icons left'>history</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>History</h5></Link></li>
          <li> <Link to='/Amount'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
         </ul><br/>
+        <a className="light" onClick={adminAccount}>Login to My Admin Account</a><br/>
         <a className="light" onClick={deleteAccount}>Delete My Account</a>
             </div><br/>
             <div className="container"><a onClick={(e)=>logout(e)} className="btn-small light" >Log out</a></div>

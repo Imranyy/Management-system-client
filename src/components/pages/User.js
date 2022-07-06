@@ -32,12 +32,19 @@ const User=({setAuth})=>{
         </nav>
         <div className="container">
         
-        <h5 className="light customfont">This is the page where:
-          <ul>
-            <li>Personal info will be placed</li>
-            <li>History will be placed</li>
-          </ul>
-        </h5>
+        <h6 className="light customfont"><br/> 
+        <div className='card'>
+        <div className="container"><br/>
+        <p className='right'>Created On:.{localStorage.getItem('date')}</p><br/>
+        <p>Username:..{localStorage.getItem('username')}<br/>
+        Service:..{localStorage.getItem('choose')}<br/>
+        Site:..{localStorage.getItem('media')}<br/>
+        Amount of followers:..{localStorage.getItem('amount')}<br/>
+        To_pay:..{localStorage.getItem('price')}</p><br/>
+        </div>
+        </div>
+      
+        </h6>
       </div>
     </Fragment>
     )
