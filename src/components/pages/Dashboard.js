@@ -166,7 +166,7 @@ const Dashboard=({setAuth})=>{
          <li> <Link to='/about'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
         </ul><br/>
-        <a className="light" onClick={adminAccount}>Login to My Admin Account</a><br/>
+        <a className="light" onClick={adminAccount}>Login to My Admin Account</a><br/><br/>
         <a className="light" onClick={deleteAccount}>Delete My Account</a>
             </div><br/>
             <div className="container"><a onClick={(e)=>logout(e)} className="btn-small light" >Log out</a></div>
