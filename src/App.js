@@ -12,6 +12,8 @@ import User from './components/pages/User';
 import {useState,useEffect} from 'react';
 import { Toaster } from 'react-hot-toast';
 import  toast  from 'react-hot-toast';
+import Help from './components/pages/Help';
+import Payment from './components/pages/Payment';
 
 
 const App=()=>{
@@ -51,6 +53,8 @@ const App=()=>{
         <Route path='/dashboard' element={isAuthenticated ? (<Dashboard setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/user' element={isAuthenticated ? (<User setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/amount' element={isAuthenticated ? (<Amount setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+        <Route path='/help' element={isAuthenticated ? (<Help setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+        <Route path='/payment' element={isAuthenticated ? (<Payment setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/order' element={isAuthenticated ? (<Order setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/about' element={isAuthenticated ? (<About setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='*' element={<NotFound />}/>

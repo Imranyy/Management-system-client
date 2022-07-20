@@ -183,9 +183,9 @@ const Dashboard=({setAuth})=>{
           <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 style={{marginRight:'600px'}} className='light customfont black-text'>Personal Info</h5></Link></li>
          <li> <Link to='/user'><i className='material-icons left'>history</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>History</h5></Link></li>
           <li> <Link to='/order'><i className='material-icons left'>done</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Orders</h5></Link></li>
-         <li> <Link to='/Amount'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
-         <li> <Link to='/about'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
+         <li> <Link to='/payment'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
+         <li> <Link to='/help'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
         </ul><br/>
         <a className="light" style={{cursor:"pointer"}} onClick={adminAccount}>Login to My Admin Account</a><br/><br/>
         <a className="light" style={{cursor:"pointer"}} onClick={deleteAccount}>Delete My Account</a>

@@ -38,8 +38,6 @@ const About=({setAuth})=>{
         <h5 className="light customfont">This is the about page where:
           <ul>
             <li>About info will be placed</li>
-            <li>Help info will be placed</li>
-            <li>ask question get answered</li>
           </ul>
         </h5>
             
