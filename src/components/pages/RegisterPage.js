@@ -55,6 +55,8 @@ const RegisterPage=({setAuth})=>{
           toast.error(parseRes)
         }
         } catch (err) {
+          toast.error('Try again')
+          preloaderoff()
           console.log(err.message)
         }
       };
@@ -91,6 +93,8 @@ const RegisterPage=({setAuth})=>{
           toast.error(parseRes)
         }
         } catch (err) {
+          toast.error('User doesnt exist')
+          preloaderoff()
           console.log(err.message)
         }
       }

@@ -18,12 +18,15 @@ const Upload=()=>{
                 const uploadTask = uploadBytesResumable(storageRef, selected);
                 uploadTask.on('state_changed',
                  async()=>{
+                    try {
                          await getDownloadURL(storageRef).then((url)=>{
                           console.log(url);
                           localStorage.setItem('pic',url);
-                         }).then(()=>{
-                            navigate('/register')
-                          })
+                         })
+                         navigate('/register')
+                    } catch (error) {
+                        console.log(error)
+                    }
                          })
                          
             }else{
@@ -31,9 +34,12 @@ const Upload=()=>{
                 setError('Please select an image file(png or jpeg)')
             }
           }
+           
+  
     return(
-            <div id='form' className='container center'>
-            <label>
+            <>
+            <div style={{marginTop: '150px'}} className='container center'>
+            <label >
                 <input type="file" onChange={changeHandler}/>
                 <span>  
                     <img src={img} className="avatar circle img" alt='avatar' width='130'/>
@@ -49,6 +55,7 @@ const Upload=()=>{
                 <Link to='/register'>Not Now</Link>
             </div>
         </div>
+            </>
 
     )
 }

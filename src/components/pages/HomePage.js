@@ -328,9 +328,9 @@ const preloaderoff=()=>{
                 <div className="card">
                   <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a onClick={openModal}><i className="material-icons red-text lighen-1">inventory</i></a></div>
                   <div className="card-content">
-                  {sta&&sta.map((st)=>(
-                    <><p>Likes:.{st.likes}<br/>Followers:.{st.followers}<br/>Comments:.{st.comments}<br/>Lives:.{st.lives}</p><br/></>
-                     ))}
+                  {sta?sta.map((st)=>(
+                    <><p key={st.comments}>Likes:.{st.likes}<br/>Followers:.{st.followers}<br/>Comments:.{st.comments}<br/>Lives:.{st.lives}</p><br/></>
+                     )):'Cannot get Stats..'}
                   </div>
                 </div>
              </div>
@@ -343,7 +343,7 @@ const preloaderoff=()=>{
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a  onClick={openModal2} ><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
               {rev ? rev.map((revs)=>(
-                  <><p> username:.{revs.name}  <br />review:.{revs.review}</p><br /></>
+                  <><p key={revs.name}> username:.{revs.name}  <br />review:.{revs.review}</p><br /></>
                 )):'Cannot get Review..You are offline'}
               </div>
             </div>

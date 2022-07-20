@@ -39,6 +39,7 @@ const About=({setAuth})=>{
           <ul>
             <li>About info will be placed</li>
             <li>Help info will be placed</li>
+            <li>ask question get answered</li>
           </ul>
         </h5>
             

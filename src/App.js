@@ -6,10 +6,12 @@ import RegisterPage from './components/pages/RegisterPage';
 import Dashboard from './components/pages/Dashboard';
 import NotFound from './components/pages/NotFound';
 import Amount from './components/pages/Amount';
+import Order from './components/pages/Order';
 import About from './components/pages/About';
 import User from './components/pages/User';
 import {useState,useEffect} from 'react';
 import { Toaster } from 'react-hot-toast';
+import  toast  from 'react-hot-toast';
 
 
 const App=()=>{
@@ -30,12 +32,15 @@ const App=()=>{
       const parseRes= await response.json();
       parseRes===true ? setIsAuthenticated(true): setIsAuthenticated(false)
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
+      toast.error('Please Register Or Login!')
     }
   }
   useEffect(()=>{
     checkAuthenticated();
   },[]);
+
+ 
   return (
     <>
       <Router>
@@ -46,6 +51,7 @@ const App=()=>{
         <Route path='/dashboard' element={isAuthenticated ? (<Dashboard setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/user' element={isAuthenticated ? (<User setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/amount' element={isAuthenticated ? (<Amount setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
+        <Route path='/order' element={isAuthenticated ? (<Order setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='/about' element={isAuthenticated ? (<About setAuth={setAuth}/>):(<Navigate to='/'/>)}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
