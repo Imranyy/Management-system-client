@@ -22,7 +22,7 @@ const HomePage=({setAuth})=>{
     //const pic=localStorage.getItem('pic');
     const getName=async()=>{
         try {
-            const url="http://localhost:3000/api/userdata"
+            const url="https://project-api-version1.herokuapp.com/api/userdata"
             const response=await fetch(url,{
                 method:"GET",
                 headers:{
@@ -98,9 +98,11 @@ const HomePage=({setAuth})=>{
     const [username,setUsername]=useState('');
     const[amount,setAmount]=useState('');
     const price=amount*2;
+    const form1=document.querySelector('#form1');
     const handleDone=async(e)=>{
       e.preventDefault()
       try {
+        preloader();
         const email=localStorage.getItem('email');
         const url=' https://project-api-version1.herokuapp.com/data/orders';
         const response=await fetch(url,{
@@ -124,6 +126,8 @@ const HomePage=({setAuth})=>{
         localStorage.setItem('media',parseRes.media)
         localStorage.setItem('amount',parseRes.amount)
         localStorage.setItem('price',parseRes.price)
+        preloaderoff();
+        form1.reset()
         toast.success('Order Posted')
       } catch (error) {
         console.log(error)
@@ -137,7 +141,8 @@ const HomePage=({setAuth})=>{
 const [review,setReview]=useState('');
 const handleReview=async(e)=>{
   e.preventDefault();
-  const url=' https://project-api-version1.herokuapp.com/data/reviews'
+  try {
+    const url=' https://project-api-version1.herokuapp.com/data/reviews'
   const response=await fetch(url,{
     method:"POST",
     body:JSON.stringify({
@@ -151,6 +156,9 @@ const handleReview=async(e)=>{
   const parseRes=await response.json();
   closeModal2();
   toast.success('review posted')
+  } catch (error) {
+    console.log(error)
+  }
 }
 //get reviews
 const[rev,setRev]=useState('')
@@ -201,8 +209,18 @@ const getSta=async()=>{
     console.log(error)
   }
 }
-    return(
+//preloader
+const preloader=()=>{
+  const loader=document.querySelector('.preload');
+  loader.style.display='block';
+}
+const preloaderoff=()=>{
+  const loader=document.querySelector('.preload');
+  loader.style.display='none';
+}
+  return(
         <div>
+           <div className="preload "></div>
         <nav className="cyran lighten-2" role="navigation">
         <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
         <div className="nav-wrapper container">
@@ -225,12 +243,12 @@ const getSta=async()=>{
       contentLabel='Example Modal'
       >
       <div className="center-align">
-        <h4>Add Statistics:</h4>
+        <h4>Statistics:</h4>
         <button className="right" onClick={closeModal}>close</button><br/>
         <div className="account-details">
-          {sta&&sta.map((st)=>(
+          {sta?sta.map((st)=>(
             <><p>Likes:.{st.likes}<br/>Followers:.{st.followers}<br/>Comments:.{st.comments}<br/>Lives:.{st.lives}</p><br/></>
-          ))}
+          )) :'loading...'}
         </div>
       </div>
     </Modal> 
@@ -262,7 +280,7 @@ const getSta=async()=>{
       contentLabel='Example Modal'
       >
     <div className="modal-content center-align">
-      <h4>Add History:</h4>
+      <h4>History:</h4>
       <button onClick={closeModal3}>close</button><br />
       <div className="account-details">
           <><p className='right'>Created On:.{localStorage.getItem('date')}</p><br/><p>username:.{localStorage.getItem('username')}<br/>Service:.{localStorage.getItem('choose')}<br/>Site:.{localStorage.getItem('media')}<br/>Amount of followers:.{localStorage.getItem('amount')}<br/>To_pay:.{localStorage.getItem('price')}</p><br/></>
@@ -276,7 +294,7 @@ const getSta=async()=>{
         <div className="card">
             <div className="card-title" style={{marginLeft: '8%'}}><h4 className="light customfont">AddMeUp. org</h4></div>
             <div className="card-content">
-              <form onSubmit={handleDone}>
+              <form onSubmit={handleDone} id='form1'>
                       <Select name="media" options={options} onChange={(e)=>{setMedia(e.value)}} required/><br/>
 
                       <Select name="choose" options={options2} onChange={(e)=>{setChoose(e.value)}} required/>
@@ -304,7 +322,7 @@ const getSta=async()=>{
 
       {/*<!--   Icon Section   --> */}
       <div className="row">
-        <div className="col s12 m4">
+        <div className="col s12 m12 l4">
           <div className="icon-block">
             <h3 className="center">Stats <i className="material-icons">topic</i></h3>
                 <div className="card">
@@ -318,21 +336,21 @@ const getSta=async()=>{
              </div>
         </div>
 
-        <div className="col s12 m4">
+        <div className="col s12 m12 l4">
           <div className="icon-block">
             <h3 className="center">Reviews <i className="material-icons">hive</i></h3>
             <div className="card">
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a  onClick={openModal2} ><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
-              {rev && rev.map((revs)=>(
+              {rev ? rev.map((revs)=>(
                   <><p> username:.{revs.name}  <br />review:.{revs.review}</p><br /></>
-                ))}
+                )):'Cannot get Review..You are offline'}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="col s12 m4">
+        <div className="col s12 m12 l4">
           <div className="icon-block">
             <h3 className="center">History <i className="material-icons">history</i></h3><div className="card">
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a   onClick={openModal3}><i className="material-icons red-text lighen-1">inventory</i></a></div>

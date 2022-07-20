@@ -16,7 +16,7 @@ const RegisterPage=({setAuth})=>{
       };
       
       //form inputs
-      const pic=localStorage.getItem('pic')
+      const pic=localStorage.getItem('pic')||'oo';
       const [username,setName]=useState('');
       const [email,setEmail]=useState('');
       const [password, setPassword]=useState('');
@@ -25,7 +25,8 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit1=async(e)=>{
         e.preventDefault()
         try {
-          const url=' https://project-api-version1.herokuapp.com/api/register';
+          preloader()
+          const url='https://project-api-version1.herokuapp.com/api/register';
           const response= await fetch(url,{
             method:'post',
             body:JSON.stringify({
@@ -46,9 +47,11 @@ const RegisterPage=({setAuth})=>{
           localStorage.setItem('email',parseRes.email);
           localStorage.setItem('id',parseRes._id);
           setAuth(true)
+          preloaderoff()
           toast.success('success register')
         }else{
           setAuth(false)
+          preloaderoff()
           toast.error(parseRes)
         }
         } catch (err) {
@@ -60,7 +63,8 @@ const RegisterPage=({setAuth})=>{
       const handleSubmit2=async(e)=>{
         e.preventDefault()
         try {
-          const url=' https://project-api-version1.herokuapp.com/api/login'
+          preloader();
+          const url='https://project-api-version1.herokuapp.com/api/login'
           const response= await fetch(url,{
             method:'POST',
             body:JSON.stringify({
@@ -79,19 +83,30 @@ const RegisterPage=({setAuth})=>{
           localStorage.setItem('email',parseRes.email);
           localStorage.setItem('id',parseRes._id);
           setAuth(true)
+          preloaderoff()
           toast.success('success login')
         }else{
           setAuth(false)
+          preloaderoff();
           toast.error(parseRes)
         }
         } catch (err) {
           console.log(err.message)
         }
       }
-
+       //preloader
+       const preloader=()=>{
+        const loader=document.querySelector('.preload');
+        loader.style.display='block';
+      }
+      const preloaderoff=()=>{
+        const loader=document.querySelector('.preload');
+        loader.style.display='none';
+      }
 
     return(
         <div>
+           <div className="preload "></div>
             {/*register modal*/}
             <div className='register customfont'>
                 <div className='registermodal container'>

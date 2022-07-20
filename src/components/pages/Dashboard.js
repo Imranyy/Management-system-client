@@ -22,11 +22,13 @@ const Dashboard=({setAuth})=>{
     const id=localStorage.getItem('id');
     const logout=async(e)=>{
         try {
+          preloader();
             localStorage.removeItem('token');
             localStorage.removeItem('name');
             localStorage.removeItem('email');
             localStorage.removeItem('pic');
             localStorage.removeItem('id');
+            preloaderoff()
             toast.success('logout successfully')
             setAuth(false)
         } catch (err) {
@@ -35,7 +37,8 @@ const Dashboard=({setAuth})=>{
     }
     const deleteAccount=async()=>{
         try {
-            const url=` https://project-api-version1.herokuapp.com/api/${id}`
+          preloader();
+            const url=`https://project-api-version1.herokuapp.com/api/${id}`
             const deleteUser= await fetch(url,{
                 method:"DELETE"
             })
@@ -47,6 +50,7 @@ const Dashboard=({setAuth})=>{
             localStorage.removeItem('pic');
             localStorage.removeItem('id');
             setAuth(false)
+            preloaderoff();
             toast.error('Account Deleted')
         } catch (err) {
             console.log(err.message)
@@ -84,37 +88,51 @@ const Dashboard=({setAuth})=>{
                 const uploadTask = uploadBytesResumable(storageRef, selected);
                 uploadTask.on('state_changed',
                  async()=>{
-                         await getDownloadURL(storageRef).then((url)=>{
-                          console.log(url);
-                          localStorage.setItem('pic',url);
-                         }).then(()=>{
-                            closeModal()
-                            const url=` https://project-api-version1.herokuapp.com/api/${localStorage.getItem('id')}`
-                            const update=localStorage.getItem('pic')
-                            fetch(url,{
-                                method:'PATCH',
-                                body:JSON.stringify({
-                                  pic:update
-                                }),
-                                  headers:{
-                                    'Content-Type':'application/json'
-                                  }
-                            })
-                            .then(toast.success('updated'))
-                            .catch(err=>console.log(err))
-
+                     try {
+                      preloader()
+                      await getDownloadURL(storageRef).then((url)=>{
+                       console.log(url);
+                       localStorage.setItem('pic',url);
+                        })
+                         closeModal()
+                         const url=` https://project-api-version1.herokuapp.com/api/${localStorage.getItem('id')}`
+                         const update=localStorage.getItem('pic')
+                         fetch(url,{
+                             method:'PATCH',
+                             body:JSON.stringify({
+                               pic:update
+                             }),
+                               headers:{
+                                 'Content-Type':'application/json'
+                               }
+                         })
+                         preloaderoff();
+                         setFile(null);
+                         toast.success('updated');
+                     } catch (error) {
+                      console.log(error)
+                     }
 
                           })
-                         })
                          
             }else{
                 setFile(null);
                 setError('Please select an image file(png or jpeg)')
             }
           }
-    
+          //preloader
+            const preloader=()=>{
+              const loader=document.querySelector('.preload');
+              loader.style.display='block';
+            }
+            const preloaderoff=()=>{
+              const loader=document.querySelector('.preload');
+              loader.style.display='none';
+            }
     return(
-        <div>
+        <>
+          <div className="preload "></div>
+
             <nav className="cyran lighten-2" role="navigation">
                 <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
                 <div className="nav-wrapper container">
@@ -150,7 +168,7 @@ const Dashboard=({setAuth})=>{
     </div>
   </Modal>
 
-            <div className="container">
+            <div className="">
             <div className="center-align">
             <h4>Dashboard:</h4><br />
             <div className="container">
@@ -161,7 +179,7 @@ const Dashboard=({setAuth})=>{
          <p className="light customfont" style={{fontSize: '12px'}}>User id: {id}</p>
          </div>
          <ul>
-          <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Personal Info</h5></Link></li>
+          <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 style={{marginRight:'600px'}} className='light customfont black-text'>Personal Info</h5></Link></li>
           <li> <Link to='/Amount'><i className='material-icons left'>account_circle</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Account</h5></Link></li>
          <li> <Link to='/user'><i className='material-icons left'>history</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>History</h5></Link></li>
          <li> <Link to='/Amount'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
@@ -175,7 +193,7 @@ const Dashboard=({setAuth})=>{
             </div>
         </div>
        
-        </div>
+        </>
     )
 };
 
