@@ -170,8 +170,7 @@ const Dashboard=({setAuth})=>{
   </Modal>
 
             <div className="">
-            <div className="center-align">
-            <h4>Dashboard:</h4><br />
+            <div className="center-align"><br />
             <div className="container">
             <div className='center'>
          <img src={pic?pic:img} className="avatar circle img" alt='avatar' width='100' onClick={openModal}/><br/>

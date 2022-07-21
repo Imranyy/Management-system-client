@@ -114,15 +114,16 @@ const RegisterPage=({setAuth})=>{
             {/*register modal*/}
             <div className='register customfont'>
                 <div className='registermodal container'>
-                <h5 style={{borderBottom:'1px solid gray',width:'41%', margin:'0 auto', color:'rgb(226, 43, 165)'}}>register</h5> <br/>
-                <p style={{fontSize:'20px'}}></p>
-                <form onSubmit={handleSubmit1}>
+                <h5 className="reglogo container">register</h5> <br/>
+                <form className="regform" onSubmit={handleSubmit1}>
                     <input type='text'  placeholder="Enter username" name='username' onChange={(e)=>{setName(e.target.value)}} required className="form-control my-3"/>
                     <input type='text' placeholder="Enter email" name="email" required onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}}
                     required className="form-control my-3"/>
-                    <button className="btn-small waves-effect waves-light left" type='submit' style={{marginTop:'40px', backgroundColor: 'rgb(226, 43, 165)'}}>Register</button>
-                    <a onClick={toLogin} className="right" style={{cursor: 'pointer', marginTop: '10px'}}>I have an account!</a>
+                    <div className="btm">
+                    <button className="btn-small waves-effect waves-light left regbtn" type='submit' >Register</button>
+                    <a onClick={toLogin} className="right reglink" >I have an account!</a>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -130,14 +131,15 @@ const RegisterPage=({setAuth})=>{
             {/*login modal */}
             <div className='login customfont'>
                 <div className='loginmodal container'>
-                <h5 style={{borderBottom:'1px solid gray',width:'41%', margin:'0 auto', color:'rgb(226, 43, 165)'}}>Login</h5> <br/>
-                <p style={{fontSize:'20px'}}></p>
-                <form onSubmit={handleSubmit2}>
+                <h5 className="loginlogo container">Login</h5> <br/>
+                <form className="loginform container" onSubmit={handleSubmit2}>
                     <input type='text' placeholder="Enter email" name="email" required style={{height:'30px'}} onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}} className="form-control my-3"
                     required style={{height:'30px'}}/>
-                    <button className="btn-small waves-effect waves-light left" type='submit' style={{marginTop:'40px', backgroundColor: 'rgb(226, 43, 165)'}}>Login</button>
-                    <a onClick={toReg} className="right" style={{cursor: 'pointer', marginTop: '50px'}}>Register</a>
+                    <div className="btm">
+                    <button className="btn-small waves-effect waves-light left loginbtn" type='submit' >Login</button>
+                    <a onClick={toReg} className="right loginlink" >Register</a>
+                    </div>
                     </form>
                 </div>
             </div>

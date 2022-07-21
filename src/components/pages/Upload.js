@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import img from '../../img.png';
+import gif from '../../preloader.png';
 import {Link, useNavigate} from 'react-router-dom'
 import { projectStorage,ref,getDownloadURL,uploadBytesResumable} from '../../FirebaseConfig/FirebaseConfig';
 const Upload=()=>{
@@ -38,7 +39,8 @@ const Upload=()=>{
   
     return(
             <>
-            <div style={{marginTop: '150px'}} className='container center'>
+            <img src={gif} style={{display:'none'}}/>
+            <div style={{marginTop: '70px'}} className='container center'>
             <label >
                 <input type="file" onChange={changeHandler}/>
                 <span>  

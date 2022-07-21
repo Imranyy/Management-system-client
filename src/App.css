@@ -24,7 +24,7 @@ body{
   display: block;
 }
 .loginmodal{
-  width: 60%;
+  width: 85%;
   height: 40%;
   padding: 30px;
   background: white;
@@ -46,8 +46,8 @@ body{
   display: none;
 }
 .registermodal{
-  width: 60%;
-  height: 50%;
+  width: 85%;
+  height: 45%;
   padding: 30px;
   background: white;
   margin: 100px auto;
@@ -60,23 +60,98 @@ label input{
   width: 0;
   opacity: 0;
 }
-
-
+.reglogo{
+  border-bottom:1px solid gray;
+  width:110px;
+   margin-top:-15px;
+   color:rgb(221, 63, 168);
+}
+.regform{
+ width: 95%;
+}
+.btm{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.regbtn{
+  border-radius: 5px;
+  border:none;
+  outline: none;
+  color: white;
+  margin-top:4%;
+ background-color: rgb(226, 43, 165);
+}
+.reglink{
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 90%;
+}
+.loginlogo{
+  border-bottom:1px solid gray;
+  width:110px;
+   margin-top:-15px;
+   color:rgb(221, 63, 168);
+}
+.loginform{
+  width: 95%;
+}
+.loginbtn{
+  border-radius: 5px;
+  border:none;
+  outline: none;
+  color: white;
+  margin-top:3%;
+  margin-left: -20%;
+ background: rgb(226, 43, 165);
+}
+.loginlink{
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 90%;
+}
 .img{
   cursor: pointer;
 }
 .not{
-  margin-top: 30% ;
+  margin-top: 310px ;
 }
 .error{
   color: #b13737;
 }
 .preload{
-  background: #ffff url('./preloader.gif') no-repeat center center;
-  background-size: 60%;
+  background: #ffff url('./preloader.png') no-repeat center center;
+  background-size: 70%;
   height: 100vh;
   width: 100%;
   position: fixed;
   z-index: 100;
   display: none;
+}
+
+@media only screen and (max-width:350px) {
+  .reglogo{
+    border-bottom:1px solid gray;
+    width:75px;
+     margin-top:-15px;
+     color:rgb(221, 63, 168);
+    font-size: 18px;
+  }
+  .regbtn{
+    height: 30px;
+    font-size: 10px;
+  }
+  .reglink{
+    margin-left: 10px;
+  }
+  .loginlogo{
+    border-bottom:1px solid gray;
+    width:75px;
+     margin-top:-15px;
+     color:rgb(221, 63, 168);
+    font-size: 18px;
+  }
+  .loginform{
+    font-size: 10px;
+  }
 }
