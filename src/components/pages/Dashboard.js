@@ -35,36 +35,6 @@ const Dashboard=({setAuth})=>{
             console.log(err.message)
         }
     }
-    const deleteAccount=async()=>{
-        try {
-          preloader();
-            const url=`https://project-api-version1.herokuapp.com/api/${id}`
-            const deleteUser= await fetch(url,{
-                method:"DELETE"
-            })
-            const response=await deleteUser.json()
-            console.log(response)
-            localStorage.removeItem('token');
-            localStorage.removeItem('name');
-            localStorage.removeItem('email');
-            localStorage.removeItem('pic');
-            localStorage.removeItem('id');
-            setAuth(false)
-            preloaderoff();
-            toast.error('Account Deleted')
-        } catch (err) {
-            console.log(err.message)
-            toast.error('Try again')
-        }
-    }
-    //admin
-    const adminAccount=async()=>{
-      try {
-        
-      } catch (error) {
-        console.log(error.message)
-      }
-    }
     //modal
     const [modalIsOpen,setIsOpen]=useState(false);
     const openModal=()=>{
@@ -111,6 +81,9 @@ const Dashboard=({setAuth})=>{
                          setFile(null);
                          toast.success('updated');
                      } catch (error) {
+                      preloaderoff();
+                      setFile(null);
+                      toast.error('Avatar Update failed☠..Try again!')
                       console.log(error)
                      }
 
@@ -133,7 +106,6 @@ const Dashboard=({setAuth})=>{
     return(
         <>
           <div className="preload "></div>
-
             <nav className="cyran lighten-2" role="navigation">
                 <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
                 <div className="nav-wrapper container">
@@ -169,8 +141,7 @@ const Dashboard=({setAuth})=>{
     </div>
   </Modal>
 
-            <div className="">
-            <div className="center-align"><br />
+            <div className="center-align"><br/><br/>
             <div className="container">
             <div className='center'>
          <img src={pic?pic:img} className="avatar circle img" alt='avatar' width='100' onClick={openModal}/><br/>
@@ -179,19 +150,15 @@ const Dashboard=({setAuth})=>{
          <p className="light customfont" style={{fontSize: '12px'}}>User id: {id}</p>
          </div>
          <ul>
-          <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 style={{marginRight:'600px'}} className='light customfont black-text'>Personal Info</h5></Link></li>
-         <li> <Link to='/user'><i className='material-icons left'>history</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>History</h5></Link></li>
+          <li> <Link to='/user'><i className='material-icons left'>contact_page</i><h5 style={{marginRight:'600px'}} className='light customfont black-text'>Account</h5></Link></li>
+         <li> <Link to='/history'><i className='material-icons left'>history</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>History</h5></Link></li>
           <li> <Link to='/order'><i className='material-icons left'>done</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Orders</h5></Link></li>
          <li> <Link to='/payment'><i className='material-icons left'>payments</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Payment</h5></Link></li>
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
          <li> <Link to='/help'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
-        </ul><br/>
-        <a className="light" style={{cursor:"pointer"}} onClick={adminAccount}>Login to My Admin Account</a><br/><br/>
-        <a className="light" style={{cursor:"pointer"}} onClick={deleteAccount}>Delete My Account</a>
-            </div><br/>
-            <div className="container"><a onClick={(e)=>logout(e)} className="btn-small light" >Log out</a></div><br/>
+         </ul>
             </div>
-        </div>
+            </div>
        
         </>
     )

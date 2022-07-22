@@ -36,8 +36,7 @@ const Amount=({setAuth})=>{
         
         {/*<!--Amount balance-->*/}
         
-            <div className="center-align">
-            <h4>Balance:</h4><br />
+            <div className="center-align"><br/><br/><br />
             <div className="account-details">
                 <h5 className="center light">KSH: 234563</h5><br/><br/>
                 <div className="row container">

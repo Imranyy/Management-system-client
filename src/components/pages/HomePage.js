@@ -3,8 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import Select from 'react-select';
-import Modal from 'react-modal'
-import { stringify } from "@firebase/util";
+import Modal from 'react-modal';
 
 const customStyles={
   content:{
@@ -130,6 +129,9 @@ const HomePage=({setAuth})=>{
         form1.reset()
         toast.success('Order Posted')
       } catch (error) {
+        preloaderoff();
+        form1.reset()
+        toast.error('Post Order failed☠')
         console.log(error)
       }
       //redirect after submitting form
@@ -142,6 +144,7 @@ const [review,setReview]=useState('');
 const handleReview=async(e)=>{
   e.preventDefault();
   try {
+    preloader();
     const url=' https://project-api-version1.herokuapp.com/data/reviews'
   const response=await fetch(url,{
     method:"POST",
@@ -155,8 +158,11 @@ const handleReview=async(e)=>{
   })
   const parseRes=await response.json();
   closeModal2();
+  preloaderoff();
   toast.success('review posted')
   } catch (error) {
+    preloaderoff();
+    toast.error('Post review failed☠')
     console.log(error)
   }
 }
@@ -195,6 +201,7 @@ const getUserhistory=async()=>{
     console.log(error)
   }
 }*/
+
 //get stats
 const[sta,setSta]=useState('');
 const getSta=async()=>{
