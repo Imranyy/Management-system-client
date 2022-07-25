@@ -44,7 +44,7 @@ const Upload=()=>{
             <label >
                 <input type="file" onChange={changeHandler}/>
                 <span>  
-                    <img src={img} className="avatar circle img" alt='avatar' width='130'/>
+                    <img src={img} className="avatar circle img" alt='avatar' height="130" width='130'/>
                 <br/>
                 Set your profile pic:
                 </span>

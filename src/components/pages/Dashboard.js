@@ -144,7 +144,7 @@ const Dashboard=({setAuth})=>{
             <div className="center-align"><br/><br/>
             <div className="container">
             <div className='center'>
-         <img src={pic?pic:img} className="avatar circle img" alt='avatar' width='100' onClick={openModal}/><br/>
+         <img src={pic?pic:img} className="avatar circle img" alt='avatar' width='100' height='100' onClick={openModal}/><br/>
          <p className="light customfont">{name}</p>
          <p className="light customfont">{email}</p>
          <p className="light customfont" style={{fontSize: '12px'}}>User id: {id}</p>
@@ -157,7 +157,8 @@ const Dashboard=({setAuth})=>{
          <li> <Link to='/about'><i className='material-icons left'>info</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>About</h5></Link></li>
          <li> <Link to='/help'><i className='material-icons left'>help</i><h5 className='light customfont black-text' style={{marginRight:'600px'}}>Help</h5></Link></li>
          </ul>
-            </div>
+            </div><br/><br/> 
+            <h6 className="customfont grey-text">AMUp.org<i className="material-icons tiny">language</i></h6><br/><br/>
             </div>
        
         </>

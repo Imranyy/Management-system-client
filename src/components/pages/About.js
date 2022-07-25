@@ -32,14 +32,8 @@ const About=({setAuth})=>{
         </nav>
 
              {/*<!--content-->*/}
-      <div className="container">
-
-        {/*<!--About info-->*/}
-        <h5 className="light customfont">This is the about page where:
-          <ul>
-            <li>About info will be placed</li>
-          </ul>
-        </h5>
+      <div className="container"><br/>
+        <p className="grey">About info will be placed</p>
             
       </div>
         </Fragment>

@@ -117,7 +117,7 @@ const RegisterPage=({setAuth})=>{
                 <h5 className="reglogo container">register</h5> <br/>
                 <form className="regform" onSubmit={handleSubmit1}>
                     <input type='text'  placeholder="Enter username" name='username' onChange={(e)=>{setName(e.target.value)}} required className="form-control my-3"/>
-                    <input type='text' placeholder="Enter email" name="email" required onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
+                    <input type='email' placeholder="Enter email" name="email" required onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}}
                     required className="form-control my-3"/>
                     <div className="btm">
@@ -133,7 +133,7 @@ const RegisterPage=({setAuth})=>{
                 <div className='loginmodal container'>
                 <h5 className="loginlogo container">Login</h5> <br/>
                 <form className="loginform container" onSubmit={handleSubmit2}>
-                    <input type='text' placeholder="Enter email" name="email" required style={{height:'30px'}} onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
+                    <input type='email' placeholder="Enter email" name="email" required style={{height:'30px'}} onChange={(e)=>{setEmail(e.target.value)}} className="form-control my-3"/>
                     <input type='password' placeholder="Enter password" name='password' onChange={(e)=>{setPassword(e.target.value)}} className="form-control my-3"
                     required style={{height:'30px'}}/>
                     <div className="btm">

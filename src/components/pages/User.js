@@ -1,4 +1,4 @@
-import React,{Fragment} from "react";
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-modal/lib/components/Modal";
@@ -15,6 +15,8 @@ const customStyles={
   }
 
 const User=({setAuth})=>{
+  
+  const [isUi,setIsUi]=useState(false);
     const name=localStorage.getItem('name');
     const id=localStorage.getItem('id')
     const logout=async(e)=>{
@@ -22,12 +24,54 @@ const User=({setAuth})=>{
             localStorage.removeItem('token')
             localStorage.removeItem('name')
             localStorage.removeItem('email')
+            localStorage.removeItem('password')
+            localStorage.removeItem('pic')
             setAuth(false)
             toast.error("logout successfully")
         } catch (err) {
             console.log(err.message)
         }
     }
+    const adminlogout=async(e)=>{
+      try {
+          localStorage.removeItem('Admintoken')
+          setIsUi(false)
+          toast.error("Admin logout successfully")
+      } catch (err) {
+          console.log(err.message)
+      }
+  }
+     //setupUI for logged in and logged out admins
+ 
+     const checkUI=async()=>{
+      try {
+        const url='http://localhost:5000/admin/adminVerify'
+        const response=await fetch(url,{
+          method:'GET',
+          headers:{
+            authorization:`Bearer ${localStorage.getItem('Admintoken')}`
+          }
+        })
+        const parseRes= await response.json();
+        parseRes===true ? setIsUi(true): setIsUi(false)
+      } catch (err) {
+        
+        console.log(err.message);
+      }
+    }
+    useEffect(()=>{
+      checkUI()
+    },[]);
+    
+const loggedinLink=document.querySelectorAll('.logged-in')
+const loggedoutLink=document.querySelectorAll('.logged-out')
+  if(isUi){
+    loggedinLink.forEach(item=>item.style.display='block')
+    loggedoutLink.forEach(item=>item.style.display='none')
+  }else{
+    loggedinLink.forEach(item=>item.style.display='none')
+    loggedoutLink.forEach(item=>item.style.display='block')
+  }
      //modal
      const [modalIsOpen,setIsOpen]=useState(false);
      const openModal=()=>{
@@ -51,25 +95,45 @@ const User=({setAuth})=>{
         })
        })
        
-    //admin
-    const adminAccount=async()=>{
+    
+    //login admin
+    const loginAdmin=async()=>{
       try {
         preloader()
-        const url='http://localhost:5000/admin'
+        const url='http://localhost:5000/admin/login'
         const loginAdmin=await fetch(url,{
           method:'POST',
-
+          body:JSON.stringify({
+            email:localStorage.getItem('email'),
+            name:localStorage.getItem('name')
+          }),
+          headers:{
+            'Content-Type':'Application/json'
+          }
         })
-
-        preloaderoff()
-        toast.success('logged-in to admin🧐')
-      } catch (error) {
-        preloaderoff();
-        toast.error('Failed☠..Try again!')
-        console.log(error.message)
+        const parseRes= await loginAdmin.json()
+        if(parseRes.token){
+          localStorage.setItem('Admintoken',parseRes.token);
+          localStorage.setItem('name',parseRes.name);
+          localStorage.setItem('email',parseRes.email);
+          localStorage.setItem('id',parseRes._id);
+          setAuth(true);
+          setIsUi(true);
+          preloaderoff()
+          toast.success(`success login to Admin Account ${parseRes.name}`)
+        }else{
+          setIsUi(false)
+          setAuth(false)
+          preloaderoff();
+          toast.error(parseRes)
+        }
+        } catch (err) {
+          toast.error('Try again!..or request for an admin account ☠☠')
+          preloaderoff()
+          console.log(err.message)
+        }
       }
-    }
-    
+
     const deleteAccount=async()=>{
       try {
         preloader();
@@ -104,7 +168,7 @@ const User=({setAuth})=>{
             loader.style.display='none';
           }
     return(
-    <Fragment>
+    <>
       <div className="preload"></div>
         <nav className="cyran lighten-2" role="navigation">
             <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
@@ -117,7 +181,7 @@ const User=({setAuth})=>{
                     {/*<li onClick={(e)=>logout(e)}><a className="light" >Log out</a></li>*/}
                 </ul>
             
-                </div>
+                </div> 
         </nav>
         <div className="container">
         <Modal
@@ -127,26 +191,32 @@ const User=({setAuth})=>{
       contentLabel='Example Modal'
       >
       <div className="center-align">
-        <h6 className="light container">Referral link:</h6>
+        <h6 className="light container">Copy Referral link:</h6> 
         <div className="copy-link">
-          <input type='text' className='copy-link-input' value={id} readOnly/>
+          <input type='text' className='copy-link-input ' value={id} readOnly/>
           <button type='button' className="copy-link-button"><i className="material-icons">content_copy</i></button>
         </div>
       </div>
     </Modal> 
+<br/><br/>
+        <div className="container ">
 
-        <div className="container">
-
-        <a onClick={openModal} style={{cursor:'pointer'}} className='light customfont black-text'>Get your referral link</a>
-        
-        <a className="light" style={{cursor:"pointer"}} onClick={adminAccount}>Login to My Admin Account</a><br/><br/>
-        <a className="light" style={{cursor:"pointer"}} onClick={deleteAccount}>Delete My Account</a>
-        <div className="container"><a onClick={(e)=>logout(e)} className="btn-small light" >Log out</a></div><br/>
+        <a onClick={openModal} style={{cursor:'pointer'}} className='light customfont black-text'>Get your referral link</a><br/>
+        <Link to='/inbox' className="light logged-in" style={{cursor:"pointer", display:'none'}}><i className="material-icons ">email</i>Inbox</Link><br/>
+        <Link to='/allorders' className="light logged-in" style={{cursor:"pointer", display:'none'}}><i className="material-icons ">notifications</i>View All user Orders</Link><br/>
+        <Link to='/allusers' className="light logged-in" style={{cursor:"pointer", display:'none'}}><i className="material-icons ">assignment</i>See all registered users</Link><br/>
+        <Link to='/request' className="light logged-out" style={{cursor:"pointer",display:'none'}}><i className="material-icons ">send</i>Request for an Admin Account</Link><br/>
+        <Link to='/addAdmin' className="light logged-in" style={{cursor:"pointer", display:'none'}} ><i className="material-icons ">add_circle</i>add an Admin</Link><br/>
+        <a className="light logged-out" style={{cursor:"pointer",display:'none'}} onClick={loginAdmin}><i className="material-icons ">shield</i>Login to My Admin Account</a><br/>
+        <a className="light logged-out" style={{cursor:"pointer", display:'none'}} onClick={deleteAccount}><i className="material-icons ">delete</i>Delete My Account</a><br/><br/>
+        <a onClick={(e)=>adminlogout(e)} className="btn-small light logged-in" style={{display:'none'}} >admin Log out </a><br/>
+        <a onClick={(e)=>logout(e)} className="btn-small light logged-out" style={{display:'none'}} >Log out</a><br/>
             
         </div>
         
       </div>
-    </Fragment>
+      
+    </>
     )
 }
 export default User;

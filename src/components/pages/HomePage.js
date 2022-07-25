@@ -70,6 +70,7 @@ const HomePage=({setAuth})=>{
     const [modalIsOpen, setIsOpen]=useState(false);
     const [modalIsOpen2,setIsOpen2]=useState(false);
     const [modalIsOpen3,setIsOpen3]=useState(false);
+    const [modalIsOpen4,setIsOpen4]=useState(false);
       //modal1
     const openModal=()=>{
       setIsOpen(true)
@@ -91,6 +92,13 @@ const HomePage=({setAuth})=>{
     const closeModal3=()=>{
       setIsOpen3(false)
     }
+    //modal4
+    const openModal4=()=>{
+      setIsOpen4(true)
+    }
+    const closeModal4=()=>{
+      setIsOpen4(false)
+    }
     //main form
     const[media,setMedia]=useState(null);
     const [choose, setChoose]=useState(null);
@@ -103,10 +111,11 @@ const HomePage=({setAuth})=>{
       try {
         preloader();
         const email=localStorage.getItem('email');
-        const url=' https://project-api-version1.herokuapp.com/data/orders';
+        const url=' http://localhost:5000/data/orders';
         const response=await fetch(url,{
           method:"POST",
           body:JSON.stringify({
+            pic:localStorage.getItem('pic'),
             email:email,
             username:username,
             choose:choose,
@@ -145,10 +154,11 @@ const handleReview=async(e)=>{
   e.preventDefault();
   try {
     preloader();
-    const url=' https://project-api-version1.herokuapp.com/data/reviews'
+    const url=' http://localhost:5000/data/reviews'
   const response=await fetch(url,{
     method:"POST",
     body:JSON.stringify({
+      pic:localStorage.getItem('pic'),
       name:localStorage.getItem('name'),
       review:review
     }),
@@ -182,7 +192,7 @@ const getReview=async()=>{
   }
 }
 useEffect(()=>{
-  getReview();
+  getReview(); 
   //getUserhistory();
   getSta();
 },[])
@@ -232,7 +242,7 @@ const preloaderoff=()=>{
         <Link to='/home' id="logo-container" className="brand-logo text-darken-5 customfont center  hide-on-med-and-down">AddMeUp Org</Link>
         <div className="nav-wrapper container">
           <ul className="left">
-          <li><Link to='/amount'>Amount Balance</Link></li>
+          <li ><Link to='/amount'>Amount Balance</Link></li>
           </ul>
             <ul className="right">
                 <li><Link to='/dashboard' className="light">{name}</Link></li>
@@ -290,11 +300,23 @@ const preloaderoff=()=>{
       <h4>History:</h4>
       <button onClick={closeModal3}>close</button><br />
       <div className="account-details">
-          <><p className='right'>Created On:.{localStorage.getItem('date')}</p><br/><p>username:.{localStorage.getItem('username')}<br/>Service:.{localStorage.getItem('choose')}<br/>Site:.{localStorage.getItem('media')}<br/>Amount of followers:.{localStorage.getItem('amount')}<br/>To_pay:.{localStorage.getItem('price')}</p><br/></>
+          <><p>Created On:.{localStorage.getItem('date')}</p><br/><p>username:.{localStorage.getItem('username')}<br/>Service:.{localStorage.getItem('choose')}<br/>Site:.{localStorage.getItem('media')}<br/>Amount of followers:.{localStorage.getItem('amount')}<br/>To_pay:.{localStorage.getItem('price')}</p><br/></>
       </div>
     </div>
   </Modal>
 
+  <Modal
+      isOpen={modalIsOpen4}
+      onRequestClose={closeModal4}
+      style={customStyles}
+      contentLabel='Example Modal'
+      >
+    <div className="modal-content center-align" style={{overflowY:'scroll'}}>
+    <p className="light">Profile pic</p>
+    </div>
+  </Modal>
+
+  
   {/*<!--content--> */}
 <div className="container">
     <div className="section">
@@ -350,7 +372,7 @@ const preloaderoff=()=>{
               <div className="card-title right" style={{marginRight: '1%', marginTop:'1%'}}><a  onClick={openModal2} ><i className="material-icons red-text lighen-1">add</i></a></div>
               <div className="card-content">
               {rev ? rev.map((revs)=>(
-                  <><p key={revs.name}> username:.{revs.name}  <br />review:.{revs.review}</p><br /></>
+                  <><p key={revs.name}><img src={revs.pic} className="avatar circle img"  width='30' onClick={openModal4}/><div className="revcard">:.{revs.name}  <br />review:.{revs.review}</div></p><br /></>
                 )):'Cannot get Review..You are offline'}
               </div>
             </div>
